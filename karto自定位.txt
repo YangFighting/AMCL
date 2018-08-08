@@ -1,0 +1,46 @@
+上网本新开端口，打开roscore
+roscore
+
+上网本新开端口，启动turtlebot
+roslaunch turtlebot_bringup minimal.launch
+
+上网本端口，开启AMCL
+roslaunch turtlebot_navigation my_amcl_demo.launch map_file:=/home/yang/map/lib/rplidar_karto00.yaml
+
+调用全局定位
+rosrun amcl robot_global_localization
+
+工作站上
+roslaunch turtlebot_client kartoSlamClient.launch
+————————————————————————————————————————————————————————————
+tip
+现有地图保存在/home/yang/map/
+/lib/rplidar_karto00.yaml	确定原点的教研室地图
+/lib/rplidar_karto.yaml		不确定原点的教研室地图
+rplidar_karto.yaml			D组团走廊地图
+kartoSlamClient.launch 将同时启动 键盘操作 rviz ROS调试
+——————————————————————————————————————————————————————————————
+工作机或上网本新开端口，启动rviz，实时查看建图情况
+roslaunch turtlebot_rviz_launchers view_navigation.launch
+
+遥控turtlebot（以下二选一）
+新终端设置设备并启动游戏杆遥控支持
+rosparam set /joystick/dev "/dev/input/js0"
+roslaunch turtlebot_teleop xbox360_teleop.launch
+
+工作机或上网本新开端口，启动键盘操作Turtlebot
+roslaunch turtlebot_teleop keyboard_teleop.launch 
+——————————————————————————————————————————————————————————————
+构建地图结束保存地图
+上网本新开端口，建立目录，保存地图
+mkdir -p ~/map
+
+rosrun map_server map_saver -f ~/map/rplidar_karto
+ls ~/map
+
+————————————————————————————————————————————————————————————
+
+调试 rosrun rqt_console rqt_console
+	rosrun rqt_logger_level rqt_logger_level
+————————————————————————————————————————————————————————————
+
